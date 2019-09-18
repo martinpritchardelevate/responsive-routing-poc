@@ -14,6 +14,8 @@ export class DetailComponent {
     public masterDetailService: MasterDetailService) { }
 
   public navigateBack() {
+    // Use the `masterDetailService` rather than the
+    // router to 'Go Back'...
     this.masterDetailService.navigateBack(this.route);
   }
 

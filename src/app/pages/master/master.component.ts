@@ -14,6 +14,8 @@ export class MasterComponent {
     public masterDetailService: MasterDetailService) { }
 
   public navigateToDetail() {
+    // Use the `masterDetailService` rather than the
+    // router to navigate to child routes...
     this.masterDetailService.navigateToDetail(['detail'], this.route);
   }
 
