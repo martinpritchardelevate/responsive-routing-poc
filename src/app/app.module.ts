@@ -4,19 +4,25 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MasterComponent, DetailComponent } from './pages';
+import { BreakpointService, MasterDetailService } from './services';
+import { MasterDetailComponent } from './components';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
     MasterComponent,
     DetailComponent,
+    MasterDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [
+    BreakpointService,
+    MasterComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
