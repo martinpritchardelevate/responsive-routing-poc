@@ -37,7 +37,7 @@ const routes: Routes = [
 ];
 
 ```
-app/app-routing.module.ts
+*app/app-routing.module.ts*
 
 ### Master-Detail Service
 
@@ -45,15 +45,22 @@ To control routing between `master` and `detail` pages, use the `master-detail.s
 
 ```
 navigateToDetail(url: Array<string>, route: ActivatedRoute) {
-    this.router.navigate(url, {
-      relativeTo: this.breakpoints.isDesktop ?
-        route : route.parent
-    });
-  }
+  this.router.navigate(url, {
+    relativeTo: this.breakpoints.isDesktop ?
+      route : route.parent
+  });
+}
+
+navigateBack(route: ActivatedRoute) {
+  this.router.navigate(['../'], {
+    relativeTo: this.breakpoints.isDesktop ?
+      route.parent : route
+  });
+}
 ```
-master-detail.service.ts
+*master-detail.service.ts*
 
-
+**IMPORTANT**: Notice above that the `ActivateRoute` is passed to the `navigateToDetail(...)` method in `master-detail.service.ts`. This is key to the whole thing working, and it's important this param is passed from the calling page (as the `master` and `detail` pages will have different `ActivatedRoutes`). 
 
 ## About this project
 
