@@ -1,27 +1,60 @@
-# MyMdRoutingTest
+# Angular Master-Detail Responsive Routing POC
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4.
+## Quick Start
 
-## Development server
+Run `npm i && ng serve` for a spin up a dev server, then go to `http://localhost:4200/`. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## How it works · TLDR
 
-## Code scaffolding
+### The Project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* 1 `<master-detail>` component: Controls the display of master and detail pages
+* 1 `master-detail` service used by `<master>` and `<detail>` pages to navigate between routes
+* 1 `breakpoint` service to monitor page width changes
+* 2 test pages `<master>` and `<detail>`
 
-## Build
+### Routing
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+To achieve a reponsive `master-detail` behaviour, we parameterize the `detail` routes and place these as both children and siblings in the routing map. See:
 
-## Running unit tests
+```
+const detailRoutes = [
+  {
+    path: 'detail',
+    component: DetailComponent
+  }
+];
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+const routes: Routes = [
+  {
+    path: 'master',
+    component: MasterComponent,
+    children: [
+      ...detailRoutes
+    ]
+  },
+  ...detailRoutes
+];
 
-## Running end-to-end tests
+```
+app/app-routing.module.ts
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Master-Detail Service
 
-## Further help
+To control routing between `master` and `detail` pages, use the `master-detail.service`. Doing this ensures the responsive behaviour works. How is this achieved? The `master-detail.service` simple toggles the `{ relativeTo: }` option of the angular router based on the pages current `ActivateRoute`. Doing this means we don't need separate routes for mobile and desktop (which is nice). See:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
+navigateToDetail(url: Array<string>, route: ActivatedRoute) {
+    this.router.navigate(url, {
+      relativeTo: this.breakpoints.isDesktop ?
+        route : route.parent
+    });
+  }
+```
+master-detail.service.ts
+
+
+
+## About this project
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4. To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
