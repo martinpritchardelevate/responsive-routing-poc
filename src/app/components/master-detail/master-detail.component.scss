@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  .app-master-detail__master {
+    width: 100%;
+    padding: 10px;
+
+  }
+  .app-master-detail__master--desktop {
+    width: 320px;
+  }
+  .app-master-detail__detail {
+    flex-grow: 1;
+    padding: 10px;
+    border-left: 1px solid #e0e0e0;
+  }
+
+}
